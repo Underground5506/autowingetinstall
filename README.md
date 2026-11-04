@@ -19,6 +19,10 @@ PersonalisedInstall lets you choose a `.txt` file containing package IDs and aut
 ## if u don't have the winget
 there is an installer in this repository
 make sure to run it as an administator before reporting any issues
+## to know witch version you are using in winget just do this command
+'''text
+winget --version
+'''
 
 ## How to use
 
