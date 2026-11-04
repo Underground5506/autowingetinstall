@@ -48,7 +48,7 @@ You can search for package IDs on [winget.run](https://winget.run/).
 
 ## Disclaimer
 
-Installation behavior depends on each package and its installer. Silent installation is not guaranteed for every application.
+Installation behavior depends on each package and its installer. Silent installation is not guaranteed for every application.They may ask for things such a administrator level access to your system.
 
 Review the package IDs before installing software.
 
