@@ -26,7 +26,7 @@ make sure to run it as an administator before reporting any issues
 
 ## How to use
 
-1. Download or clone this repository.
+1. Download or clone this repository.( u can also just download the files that u want )
 2. Create a `.txt` file containing the winget package IDs you want to install.
 3. Run `personnalizatedinstall.bat`.
 4. Select your `.txt` file when prompted.
