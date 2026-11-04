@@ -16,6 +16,9 @@ PersonalisedInstall lets you choose a `.txt` file containing package IDs and aut
 
 - Windows 10 or Windows 11.
 - [Windows Package Manager (winget)](https://learn.microsoft.com/en-us/windows/package-manager/winget/).
+## if u don't have the winget
+there is an installer in this repository
+make sure to run it as an administator before reporting any issues
 
 ## How to use
 
