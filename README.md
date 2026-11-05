@@ -46,7 +46,7 @@ Replace these examples with the package IDs of your choice.
 
 You can search for package IDs on [winget.run](https://winget.run/).
 
-##status
+## status
 
 the project is complete and will not receive any update until we discover any issue on it
 
