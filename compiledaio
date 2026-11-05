@@ -1,0 +1,85 @@
+@echo off
+setlocal EnableExtensions
+title AutoWingetInstall - Launcher
+color 0B
+
+:: Always work from the folder where this launcher is stored.
+pushd "%~dp0"
+
+:main
+cls
+echo ============================================================
+echo                    AUTOWINGETINSTALL
+echo ============================================================
+echo.
+echo  [1] Automatic installation
+echo  [2] Personalized installation
+echo  [3] Install WinGet
+echo  [4] WinGet Search Engine
+echo  [5] Open project README
+echo  [6] Exit
+echo.
+choice /c 123456 /n /m "Select an option [1-6]: "
+
+if errorlevel 6 goto exit
+if errorlevel 5 goto readme
+if errorlevel 4 goto search
+if errorlevel 3 goto winget_installer
+if errorlevel 2 goto personalized
+if errorlevel 1 goto automatic
+
+:automatic
+call :run_file "autoinstall.bat"
+goto return_menu
+
+:personalized
+call :run_file "personnalizatedinstall.bat"
+goto return_menu
+
+:winget_installer
+call :run_file "winget installer.bat"
+goto return_menu
+
+:search
+call :run_file "winget search engine.bat"
+goto return_menu
+
+:readme
+if exist "README.md" (
+    start "" "README.md"
+) else (
+    echo.
+    echo [ERROR] README.md was not found in this folder.
+    pause
+)
+goto main
+
+:run_file
+if not exist "%~1" (
+    echo.
+    echo [ERROR] Required file not found:
+    echo "%~dp0%~1"
+    echo.
+    echo Make sure all original project files are in the same folder
+    echo as this launcher.
+    pause
+    exit /b 1
+)
+echo.
+echo Launching %~1...
+echo.
+call "%~dp0%~1"
+exit /b 0
+
+:return_menu
+echo.
+echo Returning to AutoWingetInstall...
+timeout /t 2 >nul
+goto main
+
+:exit
+echo.
+echo Thanks for using AutoWingetInstall!
+popd
+endlocal
+exit /b 0
