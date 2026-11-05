@@ -46,6 +46,10 @@ Replace these examples with the package IDs of your choice.
 
 You can search for package IDs on [winget.run](https://winget.run/).
 
+##status
+
+the project is complete and will not receive any update until we discover any issue on it
+
 ## Disclaimer
 
 Installation behavior depends on each package and its installer. Silent installation is not guaranteed for every application.They may ask for things such a administrator level access to your system.
