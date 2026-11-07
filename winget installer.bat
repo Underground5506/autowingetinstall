@@ -1,5 +1,6 @@
 
 @echo off
+setlocal
 title WinGet Full Installation
 color 0B
 
@@ -10,10 +11,20 @@ echo.
 
 :: Check administrator privileges
 net session >nul 2>&1
-if %errorlevel% neq 0 (
+if errorlevel 1 (
     echo ERROR: Please run this script as Administrator.
     pause
     exit /b 1
+)
+
+:: Check if WinGet is already installed
+where winget >nul 2>&1
+if not errorlevel 1 (
+    echo [INFO] WinGet is already installed.
+    winget --version
+    echo.
+    pause
+    exit /b 0
 )
 
 echo Downloading and installing dependencies...
@@ -32,6 +43,7 @@ Write-Host '[2/4] Downloading UI.Xaml...'; ^
 Invoke-WebRequest 'https://www.nuget.org/api/v2/package/Microsoft.UI.Xaml/2.8.6' -OutFile $x; ^
 Expand-Archive $x -DestinationPath (Join-Path $dir 'Xaml') -Force; ^
 $ui=Join-Path $dir 'Xaml\tools\AppX\x64\Release\Microsoft.UI.Xaml.2.8.appx'; ^
+if (!(Test-Path $ui)) { throw 'Microsoft.UI.Xaml dependency was not found.' }; ^
 Write-Host '[3/4] Downloading Microsoft App Installer...'; ^
 Invoke-WebRequest 'https://aka.ms/getwinget' -OutFile $b; ^
 Write-Host '[4/4] Installing packages...'; ^
@@ -39,6 +51,7 @@ Add-AppxPackage -Path $v; ^
 Add-AppxPackage -Path $ui; ^
 Add-AppxPackage -Path $b -ErrorAction Stop; ^
 Write-Host 'Installation completed successfully!' -ForegroundColor Green; ^
+Remove-Item $dir -Recurse -Force; ^
 exit 0 ^
 } catch { Write-Host ('INSTALLATION ERROR: '+$_.Exception.Message) -ForegroundColor Red; exit 1 }"
 
@@ -46,19 +59,22 @@ if errorlevel 1 (
     echo.
     echo [ERROR] Installation failed!
     echo Check the error messages above.
-) else (
-    echo.
-    echo [SUCCESS] WinGet installation completed!
-    echo.
-    echo Testing WinGet...
+    pause
+    exit /b 1
+)
 
-    winget --version
+echo.
+echo [SUCCESS] WinGet installation completed!
+echo.
+echo Testing WinGet...
 
-    if errorlevel 1 (
-        echo [WARNING] WinGet was installed but is not responding.
-    )
+winget --version
+
+if errorlevel 1 (
+    echo [WARNING] WinGet is installed but is not responding.
+    echo Try opening a new terminal session.
 )
 
 echo.
 pause
-exit /b
+exit /b 0
