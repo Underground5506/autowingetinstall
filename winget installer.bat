@@ -44,14 +44,21 @@ exit 0 ^
 
 if errorlevel 1 (
     echo.
-    echo Installation failed!
+    echo [ERROR] Installation failed!
+    echo Check the error messages above.
 ) else (
     echo.
-    echo WinGet installation was successful!
+    echo [SUCCESS] WinGet installation completed!
     echo.
     echo Testing WinGet...
+
     winget --version
+
+    if errorlevel 1 (
+        echo [WARNING] WinGet was installed but is not responding.
+    )
 )
 
 echo.
 pause
+exit /b
